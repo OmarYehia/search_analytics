@@ -17,14 +17,18 @@
             clearTimeout(timeout);
 
             timeout = setTimeout(() => {
-                fetch('/api/v1/search_terms', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ content: input.value })
-                })
-            },300)
+                const content =  input.value.trim();
+
+                if (content.length > 1) {
+                    fetch('/api/v1/search_terms', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ content })
+                    })
+                }
+            }, 600)
         })
     </script>
 </body>
