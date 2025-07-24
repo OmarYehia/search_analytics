@@ -37,7 +37,6 @@ class Api::V1::SearchTermsController < ApplicationController
             # Skip logging if
             # 1. Very recent (< 15 seconds)
             # 2. Very similar (relationship between last content and current content in both directions -adding or removing characters-)
-            # 3. Not too different in length
             if time_diff < 15.seconds
                 current_lower = content.downcase
                 last_lower = last_content.downcase
