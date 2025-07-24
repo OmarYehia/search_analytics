@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post 'search_terms', to: 'search_terms#create'
+      delete 'search_terms/clear', to: 'search_terms#clear'
       # get 'analytics', to: 'search_analytics#index' # Was used for testing. Uncomment if needed
       get 'search_analytics/top_terms', to: 'search_analytics#top_terms'
       get 'search_analytics/trends', to: 'search_analytics#trends'

@@ -17,7 +17,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     refreshCharts();
-    setInterval(refreshCharts, 5000); // Poll every X second - Simulating real-time without web sockets 
+    setInterval(refreshCharts, 5000); // Poll every X second - Simulating real-time without web sockets
+
+    document.getElementById('clear-btn').addEventListener('click', async () => {
+        if (!confirm("Are you sure you want to delete all search logs?")) return;
+
+        try {
+            const res = await fetch('/api/v1/search_terms/clear', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            refreshCharts();
+        } catch (err) {
+            alert("Failed to clear logs.");
+            console.error(err);
+        }
+    });
 });
 
 function submitSearch(content) {

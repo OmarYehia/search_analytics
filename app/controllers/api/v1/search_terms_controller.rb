@@ -35,22 +35,20 @@ class Api::V1::SearchTermsController < ApplicationController
             time_diff = Time.current - last.created_at
 
             # Skip logging if
-            # 1. Very recent (< 5 seconds)
+            # 1. Very recent (< 15 seconds)
             # 2. Very similar (relationship between last content and current content in both directions -adding or removing characters-)
             # 3. Not too different in length
-            if time_diff < 5.seconds
+            if time_diff < 15.seconds
                 current_lower = content.downcase
                 last_lower = last_content.downcase
 
-                length_diff = (content.length - last_content.length).abs
-
-                if (current_lower.start_with?(last_lower) || last_lower.start_with?(current_lower)) && length_diff < 10
+                if (current_lower.start_with?(last_lower) || last_lower.start_with?(current_lower))
                     should_log = false
                 end
             end
 
-            # Log duplicate content after 15 seconds. The user might be retrying
-            if content.downcase  == last_content.downcase && time_diff >= 15.seconds
+            # Log duplicate content after 60 seconds. The user might be retrying
+            if content.downcase  == last_content.downcase && time_diff >= 60.seconds
                 should_log = true
             end
         end
@@ -63,5 +61,10 @@ class Api::V1::SearchTermsController < ApplicationController
         end
 
         head :ok
+    end
+
+    def clear
+        SearchTerm.delete_all
+        render json: { message: 'All search logs cleared successfully.' }, status: :ok
     end
 end
