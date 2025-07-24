@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Search Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <h1>Search for an article:</h1>
-    <input type="text" id="searchBox" placeholder="Search..." />
+    <h1>Search Analytics Simulation</h1>
 
-    <script>
-        const input = document.getElementById('searchBox');
-        let timeout;
+    <div class="search-section">
+        <input id="searchInput" type="text" placeholder="Search for a term..." />
+    </div>
 
-        input.addEventListener('input', () => {
-            clearTimeout(timeout);
+    <div class="charts-grid">
+        <div class="chart-container">
+            <h2>Top Search Terms</h2>
+            <canvas id="topTermsChart"></canvas>
+        </div>
 
-            timeout = setTimeout(() => {
-                const content =  input.value.trim();
+        <div class="chart-container">
+            <h2>Search Trends (Last 7 Days)</h2>
+            <canvas id="searchTrendsChart"></canvas>
+        </div>
 
-                if (content.length > 1) {
-                    fetch('/api/v1/search_terms', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ content })
-                    })
-                }
-            }, 600)
-        })
-    </script>
+        <div class="chart-container">
+            <h2>Top Users / IPs</h2>
+            <canvas id="topUsersChart"></canvas>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>
