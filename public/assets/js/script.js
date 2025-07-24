@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     refreshCharts();
-    setInterval(refreshCharts, 1000); // Poll every second - Simulating real-time without web sockets 
+    setInterval(refreshCharts, 5000); // Poll every X second - Simulating real-time without web sockets 
 });
 
 function submitSearch(content) {
